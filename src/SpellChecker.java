@@ -12,7 +12,7 @@ public class SpellChecker {
         EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SpellcheckerGUI window = new SpellcheckerGUI();
+					SpellChecker window = new SpellChecker();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
