@@ -130,9 +130,9 @@ public class SpellChecker {
 		frame.getContentPane().add(txtrWordsWillAppear, BorderLayout.NORTH);
 		
 		JButton btnIgnore = new JButton("Ignore");
-		btnIgnore.setAction(action);
 		btnIgnore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		frame.getContentPane().add(btnIgnore, BorderLayout.WEST);
@@ -142,7 +142,7 @@ public class SpellChecker {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnAddWord.setAction(action_2);
+
 		frame.getContentPane().add(btnAddWord, BorderLayout.EAST);
 		
 		JButton btnNext = new JButton("Next");
@@ -150,7 +150,7 @@ public class SpellChecker {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNext.setAction(action_1);
+
 		frame.getContentPane().add(btnNext, BorderLayout.CENTER);
 	}
 
