@@ -36,20 +36,31 @@ private JFrame frame;
 		
 		JTextArea txtrWordsWillAppear = new JTextArea();
 		txtrWordsWillAppear.setFont(new Font("Lucida Grande", Font.PLAIN, 33));
-		txtrWordsWillAppear.setRows(1);
+		txtrWordsWillAppear.setRows(2);
 		txtrWordsWillAppear.setText("Words Will Appear Here");
 		frame.getContentPane().add(txtrWordsWillAppear, BorderLayout.NORTH);
 		
-		JButton btnNext = new JButton("Ignore");
-		btnNext.addActionListener(new ActionListener() {
+		JButton btnIgnore = new JButton("Ignore");
+		btnIgnore.setAction(action);
+		btnIgnore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		frame.getContentPane().add(btnNext, BorderLayout.WEST);
+		frame.getContentPane().add(btnIgnore, BorderLayout.WEST);
 		
 		JButton btnAddWord = new JButton("Add Word");
+		btnAddWord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAddWord.setAction(action_2);
 		frame.getContentPane().add(btnAddWord, BorderLayout.EAST);
 		
-		JButton btnNext_1 = new JButton("Next");
-		frame.getContentPane().add(btnNext_1, BorderLayout.CENTER);
+		JButton btnNext = new JButton("Next");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNext.setAction(action_1);
+		frame.getContentPane().add(btnNext, BorderLayout.CENTER);
 	}
