@@ -35,12 +35,12 @@ public class SpellChecker {
         dict.insertWord("X");
         dict.insertWord("Y");
         dict.insertWord("Z");*/
-        dict.insertWord("hey");
+        /*dict.insertWord("hey");
         dict.insertWord("ice");
         dict.insertWord("like");
         dict.insertWord("man");
         dict.insertWord("what");
-        dict.insertWord("up");
+        dict.insertWord("up");*/
         System.out.println(dict.toString());
         Scanner scan = new Scanner(System.in);
         String in;

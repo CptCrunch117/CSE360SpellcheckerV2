@@ -1,7 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 /**
@@ -29,6 +26,25 @@ public class Dictionary {
         this.incSize = 0;
         addFilecount = 0;
         incFilecount = 0;
+        File file = new File("Dictionary.txt");
+        if(file.exists()) {
+            FileReader read = null;
+            try {
+                read = new FileReader(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            BufferedReader readB = new BufferedReader(read);
+            String line;
+            try {
+                while ((line = readB.readLine()) != null) {
+                    this.insertWord(line);
+                }
+            } catch (IOException e) {
+                //Handle error
+            }
+        }
+
     }
 
     public Dictionary(int size){
@@ -43,49 +59,6 @@ public class Dictionary {
     }
 
 
-
-    public String findWord(String word){
-        int index = binarySearch(word);
-        if(index != -1) {
-            return this.dictionary[index];
-        }
-        return "ERROR: Not Found";
-    }
-
-
-
-    public int binarySearch(String word){
-
-        int min = 0;
-        int max = this.size;
-        int found = -1;
-
-        int mark = (this.size % 2 == 0) ? (min+max)/2 : ((min+max)-1)/2;
-        if(word.compareTo(this.dictionary[mark]) == 0){
-            found  = mark;
-        }
-        else if(word.compareTo(this.dictionary[mark]) < 0){
-            max = mark-1;
-        }
-        else{
-            min = mark+1;
-        }
-
-        while(min >= max && found == -1 ){
-            mark = (min+max)/2;
-            if(word.compareTo(this.dictionary[mark]) == 0){
-                found = mark;
-            }
-            else if(word.compareTo(this.dictionary[mark]) < 0){
-                max = mark-1;
-            }
-            else{
-                min = mark -1;
-            }
-        }//END WHILE LOOP
-
-        return found;
-    }
     public int searchWord(String[] list,String type,String word){
         int size = 0;
         if(type.equalsIgnoreCase("dict")){
@@ -113,7 +86,7 @@ public class Dictionary {
         }
         return -1;
     }
-    public void expandSize(String[] listForExpansion, String type){
+    private void expandSize(String[] listForExpansion, String type){
         int newLength = listForExpansion.length * 2;
         String[] d = new String[newLength];
         for(int i = 0; i <= listForExpansion.length; i++)
@@ -232,7 +205,7 @@ public class Dictionary {
         }
         return false;
     }
-    public int findInsertionPoint(String word){
+    private int findInsertionPoint(String word){
         int min = 0;
         int max = this.size;
         int found = -1;
@@ -283,7 +256,7 @@ public class Dictionary {
         }//END WHILE LOOP
         return found;
     }
-    public int findAdInsertionPoint(String word){
+    private int findAdInsertionPoint(String word){
         int min = 0;
         int max = this.adSize;
         int found = -1;
@@ -334,7 +307,7 @@ public class Dictionary {
         }//END WHILE LOOP
         return found;
     }
-    public int findIncInsertionPoint(String word){
+    private int findIncInsertionPoint(String word){
         int min = 0;
         int max = this.incSize;
         int found = -1;
@@ -469,9 +442,9 @@ public class Dictionary {
     //FILE OPS
     public boolean addedToFile(String optName) throws IOException {
 
-        String filename = "addedWords"+addFilecount;
+        String filename = "addedWords"+addFilecount+".txt";
         if(optName != null){
-            filename = optName;
+            filename = optName+".txt";
         }
         File addedWords = new File(filename);
         if(!addedWords.exists()) {
@@ -501,9 +474,9 @@ public class Dictionary {
         return true;
     }
     public boolean incToFile(String optName){
-        String filename = "incorrectWords"+incFilecount;
+        String filename = "incorrectWords"+incFilecount+".txt";
         if(optName != null){
-            filename = optName;
+            filename = optName+".txt";
         }
         File incWords = new File(filename);
         if(!incWords.exists()) {
@@ -533,7 +506,7 @@ public class Dictionary {
         return true;
     }
     public boolean dictToFile(){
-        File diction = new File("Dictionary");
+        File diction = new File("Dictionary.txt");
         FileWriter write;
         try{
             write = new FileWriter(diction);
