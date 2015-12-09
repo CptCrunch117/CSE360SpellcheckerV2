@@ -57,6 +57,7 @@ public class SpellChecker {
 		txtrWordsWillAppear.setFont(new Font("Lucida Grande", Font.PLAIN, 33));
 		txtrWordsWillAppear.setRows(2);
 		txtrWordsWillAppear.setText("Welcome to SpellChecker!");
+        txtrWordsWillAppear.setEditable(false);
 		frame.getContentPane().add(txtrWordsWillAppear, BorderLayout.NORTH);
 
 
@@ -76,7 +77,7 @@ public class SpellChecker {
                     iter++;
                     txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
                     if (iter >= iterEnd) {
-                        txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                        txtrWordsWillAppear.setText("All incorrect words have\n been sorted out.");
                     }
                 }
             }
@@ -93,7 +94,7 @@ public class SpellChecker {
                     iterEnd = dict.getIncSize();
                     txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
                     if (iter >= iterEnd) {
-                        txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                        txtrWordsWillAppear.setText("All incorrect words have\n been sorted out.");
                     }
                 }
             }
@@ -104,7 +105,7 @@ public class SpellChecker {
 		final JButton btnNext = new JButton("New File");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                if(!isInit){
+                if (!isInit) {
                     iterEnd = 0;
                     dict.dictToFile();
                     dict.addedToFile(null);
@@ -113,61 +114,65 @@ public class SpellChecker {
                     txtrWordsWillAppear.setText("Processing File...");
                     dict.incrementAddFile();
                     dict.incrementIncFile();
-                }
-                else{
+                } else {
                     isInit = false;
                 }
                 String path = JOptionPane.showInputDialog("Enter File path");
-                File file = new File(path);
-                if(file.exists()) {
-                    FileReader read = null;
-                    try {
-                        read = new FileReader(file);
-                    } catch (FileNotFoundException e1) {
-                        e1.printStackTrace();
-                    }
-                    BufferedReader readB = new BufferedReader(read);
+                if (path != null) {
+                    File file = new File(path);
+                    if (file.exists()) {
+                        FileReader read = null;
+                        try {
+                            read = new FileReader(file);
+                        } catch (FileNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        BufferedReader readB = new BufferedReader(read);
 
-                    String line;
-                    try{
-                    while ((line = readB.readLine()) != null) {
-                            boolean verifyLetter = true;
-                            char[] wordChar = line.toCharArray();
-                            for (char c : wordChar) {
-                                if (!Character.isLetter(c)) {
-                                    verifyLetter = false;
+                        String line;
+                        try {
+                            while ((line = readB.readLine()) != null) {
+                                boolean verifyLetter = true;
+                                char[] wordChar = line.toCharArray();
+                                for (char c : wordChar) {
+                                    if (!Character.isLetter(c)) {
+                                        verifyLetter = false;
+                                    }
+                                }
+
+                                if (verifyLetter) {  //Disregard if verifyLetter is false as Line does not just contain letters
+                                    int correct = dict.searchWord(dict.getDictionary(), "dict", line);
+                                    if (correct == -1) {
+                                        dict.insertIncWord(line);
+                                    }
                                 }
                             }
-
-                            if (verifyLetter) {  //Disregard if verifyLetter is false as Line does not just contain letters
-                                int correct = dict.searchWord(dict.getDictionary(), "dict", line);
-                                if (correct == -1) {
-                                    dict.insertIncWord(line);
+                            iterEnd = dict.getIncSize();
+                            if (iterEnd != 0) {
+                                int dialogButton = JOptionPane.YES_NO_OPTION;
+                                int x = JOptionPane.showConfirmDialog(null, "Would you like to add the incorrect words to the Dictionary?", "?", dialogButton);
+                                if (x == JOptionPane.YES_OPTION) {
+                                    txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
                                 }
+                                if (x == JOptionPane.NO_OPTION) {
+                                    iterEnd = 0;
+                                    dict.dictToFile();
+                                    dict.addedToFile(null);
+                                    dict.incToFile(null);
+                                    txtrWordsWillAppear.setText("File Processed!");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "All Words match the Dictionary!");
                             }
+                        } catch (IOException x) {
+                            JOptionPane.showMessageDialog(null, "Could not read file");
                         }
-                        iterEnd = dict.getIncSize();
-                        if(iterEnd != 0) {
-                            int dialogButton = JOptionPane.YES_NO_OPTION;
-                            int x = JOptionPane.showConfirmDialog(null, "Would you like to add the incorrect words to the Dictionary?", "?", dialogButton);
-                            if (x == JOptionPane.YES_OPTION) {
-                                txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
-                            }
-                            if (x == JOptionPane.NO_OPTION) {
-                                iterEnd = 0;
-                                dict.dictToFile();
-                                dict.addedToFile(null);
-                                dict.incToFile(null);
-                                txtrWordsWillAppear.setText("File Processed!");
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(null,"All Words match the Dictionary!");
-                        }
-                    }catch(IOException x){
-                        JOptionPane.showMessageDialog(null,"Could not read file");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "File Does Not Exist!");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null,"File Does Not Exist!");
+                }
+                else{
+                    txtrWordsWillAppear.setText("Welcome to SpellChecker!");
                 }
             }
         });
