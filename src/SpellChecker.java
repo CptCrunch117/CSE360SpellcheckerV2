@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class SpellChecker {
     
     private JFrame frame;
+    private Dictionary dict;
 
     public static void main(String[] args) throws IOException {
         EventQueue.invokeLater(new Runnable() {
@@ -19,7 +20,7 @@ public class SpellChecker {
 				}
 			}
 		});
-        Dictionary dict = new Dictionary();
+        dict = new Dictionary();
         System.out.println(dict.toString());
         Scanner scan = new Scanner(System.in);
         String in;
