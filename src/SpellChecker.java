@@ -1,9 +1,5 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Scanner;
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by CptAmerica on 12/8/15.
@@ -11,9 +7,6 @@ import java.awt.*;
 public class SpellChecker {
     
     private JFrame frame;
-
-
-
 
     public static void main(String[] args) throws IOException {
         EventQueue.invokeLater(new Runnable() {
@@ -27,7 +20,38 @@ public class SpellChecker {
 			}
 		});
         Dictionary dict = new Dictionary();
-
+        /*dict.insertWord("A");
+        dict.insertWord("D");
+        dict.insertWord("F");
+        dict.insertWord("H");
+        dict.insertWord("B");
+        dict.insertWord("C");
+        dict.insertWord("E");
+        dict.insertWord("G");
+        dict.insertWord("L");
+        dict.insertWord("M");
+        dict.insertWord("O");
+        dict.insertWord("N");
+        dict.insertWord("Q");
+        dict.insertWord("R");
+        dict.insertWord("I");
+        dict.insertWord("J");
+        dict.insertWord("K");
+        dict.insertWord("P");
+        dict.insertWord("T");
+        dict.insertWord("S");
+        dict.insertWord("W");
+        dict.insertWord("U");
+        dict.insertWord("V");
+        dict.insertWord("X");
+        dict.insertWord("Y");
+        dict.insertWord("Z");*/
+        /*dict.insertWord("hey");
+        dict.insertWord("ice");
+        dict.insertWord("like");
+        dict.insertWord("man");
+        dict.insertWord("what");
+        dict.insertWord("up");*/
         System.out.println(dict.toString());
         Scanner scan = new Scanner(System.in);
         String in;
@@ -86,7 +110,7 @@ public class SpellChecker {
 	/**
 	 * Create the application.
 	 */
-	public SpellChecker() {
+	public SpellcheckerGUI() {
 		initialize();
 	}
 
@@ -108,7 +132,7 @@ public class SpellChecker {
 		JButton btnIgnore = new JButton("Ignore");
 		btnIgnore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				
 			}
 		});
 		frame.getContentPane().add(btnIgnore, BorderLayout.WEST);
@@ -116,7 +140,6 @@ public class SpellChecker {
 		JButton btnAddWord = new JButton("Add Word");
 		btnAddWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 			}
 		});
 
@@ -125,7 +148,6 @@ public class SpellChecker {
 		JButton btnNext = new JButton("Next");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 			}
 		});
 
