@@ -111,6 +111,8 @@ public class SpellChecker {
                     dict.incToFile(null);
                     dict.clearArrays();
                     txtrWordsWillAppear.setText("Processing File...");
+                    dict.incrementAddFile();
+                    dict.incrementIncFile();
                 }
                 else{
                     isInit = false;
@@ -147,11 +149,11 @@ public class SpellChecker {
                         iterEnd = dict.getIncSize();
                         if(iterEnd != 0) {
                             int dialogButton = JOptionPane.YES_NO_OPTION;
-                            JOptionPane.showConfirmDialog(null, "Would you like to add the incorrect words to the Dictionary?", "?", dialogButton);
-                            if (dialogButton == JOptionPane.YES_OPTION) {
+                            int x = JOptionPane.showConfirmDialog(null, "Would you like to add the incorrect words to the Dictionary?", "?", dialogButton);
+                            if (x == JOptionPane.YES_OPTION) {
                                 txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
                             }
-                            else{
+                            if (x == JOptionPane.NO_OPTION) {
                                 iterEnd = 0;
                                 dict.dictToFile();
                                 dict.addedToFile(null);

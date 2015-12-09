@@ -82,6 +82,13 @@ public class Dictionary {
         }
     }
 
+    public void incrementAddFile(){
+        this.addFilecount+=1;
+    }
+
+    public void incrementIncFile(){
+        this.incFilecount+=1;
+    }
 
     public int searchWord(String[] list,String type,String word){
         int size = 0;
@@ -503,7 +510,6 @@ public class Dictionary {
                 } catch (IOException e) {
                     return false;
                 }
-                addFilecount++;
             }
         }
         return true;
@@ -537,7 +543,6 @@ public class Dictionary {
                 } catch (IOException e) {
                     return false;
                 }
-                incFilecount++;
             }
         }
         return true;
