@@ -75,8 +75,9 @@ public class SpellChecker {
                 if (iter < iterEnd) {
                     iter++;
                     txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
-                } else {
-                    txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                    if (iter >= iterEnd) {
+                        txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                    }
                 }
             }
         });
@@ -89,9 +90,11 @@ public class SpellChecker {
                     dict.insertWord(dict.getIncorrectWords()[iter]);
                     dict.insertAdWord(dict.getIncorrectWords()[iter]);
                     dict.delete(dict.getIncorrectWords(), dict.getIncorrectWords()[iter], "inc");
+                    iterEnd = dict.getIncSize();
                     txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
-                } else {
-                    txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                    if (iter >= iterEnd) {
+                        txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                    }
                 }
             }
         });
@@ -148,19 +151,40 @@ public class SpellChecker {
                             if (dialogButton == JOptionPane.YES_OPTION) {
                                 txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
                             }
+                            else{
+                                iterEnd = 0;
+                                dict.dictToFile();
+                                dict.addedToFile(null);
+                                dict.incToFile(null);
+                                txtrWordsWillAppear.setText("File Processed!");
+                            }
                         }else{
                             JOptionPane.showMessageDialog(null,"All Words match the Dictionary!");
                         }
                     }catch(IOException x){
                         JOptionPane.showMessageDialog(null,"Could not read file");
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null,"File Does Not Exist!");
                 }
             }
         });
 
 		frame.getContentPane().add(btnNext, BorderLayout.CENTER);
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(frame, "Are you sure to close this window?", "Really Closing?",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    dict.dictToFile();
+                    dict.addedToFile(null);
+                    dict.incToFile(null);
+                    System.exit(0);
+                }
+            }
+        });
 	}
 
 }

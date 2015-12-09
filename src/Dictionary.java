@@ -475,67 +475,70 @@ public class Dictionary {
 
     //FILE OPS
     public boolean addedToFile(String optName){
-
-        String filename = "addedWords"+addFilecount+".txt";
-        if(optName != null){
-            filename = optName+".txt";
-        }
-        File addedWords = new File(filename);
-        if(!addedWords.exists()) {
-            FileWriter write;
-            try{
-                write = new FileWriter(addedWords);
-            }catch(IOException e){
-                return false;
+        if(adSize > 0) {
+            String filename = "addedWords" + addFilecount + ".txt";
+            if (optName != null) {
+                filename = optName + ".txt";
             }
-
-            BufferedWriter writeB = new BufferedWriter(write);
-
-            for(int i =0; i < this.adSize; i++){
+            File addedWords = new File(filename);
+            if (!addedWords.exists()) {
+                FileWriter write;
                 try {
-                    writeB.write(this.getAddedWords()[i]+"\n");
-                }catch(IOException e){
+                    write = new FileWriter(addedWords);
+                } catch (IOException e) {
                     return false;
                 }
+
+                BufferedWriter writeB = new BufferedWriter(write);
+
+                for (int i = 0; i < this.adSize; i++) {
+                    try {
+                        writeB.write(this.getAddedWords()[i] + "\n");
+                    } catch (IOException e) {
+                        return false;
+                    }
+                }
+                try {
+                    writeB.close();
+                } catch (IOException e) {
+                    return false;
+                }
+                addFilecount++;
             }
-            try {
-                writeB.close();
-            }catch(IOException e){
-                return false;
-            }
-            addFilecount++;
         }
         return true;
     }
     public boolean incToFile(String optName){
-        String filename = "incorrectWords"+incFilecount+".txt";
-        if(optName != null){
-            filename = optName+".txt";
-        }
-        File incWords = new File(filename);
-        if(!incWords.exists()) {
-            FileWriter write;
-            try{
-                write = new FileWriter(incWords);
-            }catch(IOException e){
-                return false;
+        if(incSize > 0) {
+            String filename = "incorrectWords" + incFilecount + ".txt";
+            if (optName != null) {
+                filename = optName + ".txt";
             }
-
-            BufferedWriter writeB = new BufferedWriter(write);
-
-            for(int i =0; i < this.incSize; i++){
+            File incWords = new File(filename);
+            if (!incWords.exists()) {
+                FileWriter write;
                 try {
-                    writeB.write(this.incorrectWords[i]+"\n");
-                }catch(IOException e){
+                    write = new FileWriter(incWords);
+                } catch (IOException e) {
                     return false;
                 }
+
+                BufferedWriter writeB = new BufferedWriter(write);
+
+                for (int i = 0; i < this.incSize; i++) {
+                    try {
+                        writeB.write(this.incorrectWords[i] + "\n");
+                    } catch (IOException e) {
+                        return false;
+                    }
+                }
+                try {
+                    writeB.close();
+                } catch (IOException e) {
+                    return false;
+                }
+                incFilecount++;
             }
-            try {
-                writeB.close();
-            }catch(IOException e){
-                return false;
-            }
-            incFilecount++;
         }
         return true;
     }
