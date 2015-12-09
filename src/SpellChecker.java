@@ -13,7 +13,9 @@ public class SpellChecker {
     private JFrame frame;
     Dictionary dict;
     int iter = 0;
+    int iterEnd = 0;
     boolean isInit = true;
+    JTextArea txtrWordsWillAppear;
     public static void main(String[] args) throws IOException {
 
 
@@ -51,10 +53,10 @@ public class SpellChecker {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JTextArea txtrWordsWillAppear = new JTextArea();
+		txtrWordsWillAppear = new JTextArea();
 		txtrWordsWillAppear.setFont(new Font("Lucida Grande", Font.PLAIN, 33));
 		txtrWordsWillAppear.setRows(2);
-		txtrWordsWillAppear.setText("Words Will Appear Here");
+		txtrWordsWillAppear.setText("Welcome to SpellChecker!");
 		frame.getContentPane().add(txtrWordsWillAppear, BorderLayout.NORTH);
 
 
@@ -69,21 +71,31 @@ public class SpellChecker {
 
 		JButton btnIgnore = new JButton("Ignore");
 		btnIgnore.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-                iter++;
-			}
-		});
+            public void actionPerformed(ActionEvent arg0) {
+                if (iter < iterEnd) {
+                    iter++;
+                    txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
+                } else {
+                    txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                }
+            }
+        });
 		frame.getContentPane().add(btnIgnore, BorderLayout.WEST);
 		
 		JButton btnAddWord = new JButton("Add Word");
-		btnAddWord.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-                dict.insertWord(dict.getIncorrectWords()[iter]);
-                dict.insertAdWord(dict.getIncorrectWords()[iter]);
-                dict.delete(dict.getIncorrectWords(), dict.getIncorrectWords()[iter], "inc");
-                iter -= 1;
-			}
-		});
+        btnAddWord.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (iter < iterEnd) {
+                    dict.insertWord(dict.getIncorrectWords()[iter]);
+                    dict.insertAdWord(dict.getIncorrectWords()[iter]);
+                    dict.delete(dict.getIncorrectWords(), dict.getIncorrectWords()[iter], "inc");
+                    iter -= 1;
+                    txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
+                } else {
+                    txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
+                }
+            }
+        });
 
 		frame.getContentPane().add(btnAddWord, BorderLayout.EAST);
 		
@@ -95,6 +107,8 @@ public class SpellChecker {
                     dict.addedToFile(null);
                     dict.incToFile(null);
                     dict.clearArrays();
+                    txtrWordsWillAppear.setText("Processing File...");
+
                 }
                 String path = JOptionPane.showInputDialog("Enter File path");
                 File file = new File(path);
@@ -125,7 +139,16 @@ public class SpellChecker {
                                 }
                             }
                         }
-                        iter = dict.getIncSize();
+                        iterEnd = dict.getIncSize();
+                        if(iterEnd != 0) {
+                            int dialogButton = JOptionPane.YES_NO_OPTION;
+                            JOptionPane.showConfirmDialog(null, "Would you like to add the incorrect words to the Dictionary?", "?", dialogButton);
+                            if (dialogButton == JOptionPane.YES_OPTION) {
+                                txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null,"All Words match the Dictionary!");
+                        }
                     }catch(IOException x){
                         JOptionPane.showMessageDialog(null,"Could not read file");
                     }
@@ -133,7 +156,7 @@ public class SpellChecker {
                     JOptionPane.showMessageDialog(null,"File Does Not Exist!");
                 }
             }
-		});
+        });
 
 		frame.getContentPane().add(btnNext, BorderLayout.CENTER);
 	}
