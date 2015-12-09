@@ -119,10 +119,10 @@ public class Dictionary {
         int high = size-1;
         while (low <= high) {
             int mid = low + (high-low) / 2;
-            if(word.compareTo(list[mid]) < 0){
+            if(word.toLowerCase().compareTo(list[mid].toLowerCase()) < 0){
                 high = mid - 1;
             }
-            else if (word.compareTo(list[mid]) > 0){
+            else if (word.toLowerCase().compareTo(list[mid].toLowerCase()) > 0){
                 low = mid + 1;
             }
             else{
@@ -299,17 +299,17 @@ public class Dictionary {
             return max;
         }
         int mark = (min+max)/2;
-        if(word.compareTo(this.dictionary[mark]) == 0){
+        if(word.toLowerCase().compareTo(this.dictionary[mark].toLowerCase()) == 0){
             found  = mark;
         }
-        else if(word.compareTo(this.dictionary[mark]) < 0){
+        else if(word.toLowerCase().compareTo(this.dictionary[mark].toLowerCase()) < 0){
             max = mark;
         }
         else{
             min = mark+1;
         }
         if(!(min < max)){
-            found = (word.compareTo(this.dictionary[mark]) < 0) ? mark-1 : mark+1;
+            found = (word.toLowerCase().compareTo(this.dictionary[mark].toLowerCase()) < 0) ? mark-1 : mark+1;
         }
         while(min <= max && found == -1 ){
             mark = (min+max)/2;
@@ -317,10 +317,10 @@ public class Dictionary {
                 if(this.dictionary[mark] == null){
                     found = mark;
                 }
-                else if(word.compareTo(this.dictionary[mark]) == 0){
+                else if(word.toLowerCase().compareTo(this.dictionary[mark].toLowerCase()) == 0){
                     found  = mark;
                 }
-                else if(word.compareTo(this.dictionary[mark]) < 0){
+                else if(word.toLowerCase().compareTo(this.dictionary[mark].toLowerCase()) < 0){
                     found = mark;
                 }
                 else{
@@ -329,10 +329,10 @@ public class Dictionary {
             }
             else{
                 mark = (min+max)/2;
-                if(word.compareTo(this.dictionary[mark]) == 0){
+                if(word.toLowerCase().compareTo(this.dictionary[mark].toLowerCase()) == 0){
                     found = mark;
                 }
-                else if(word.compareTo(this.dictionary[mark]) < 0){
+                else if(word.toLowerCase().compareTo(this.dictionary[mark].toLowerCase()) < 0){
                     max = mark;
                 }
                 else{
@@ -356,17 +356,17 @@ public class Dictionary {
             return max;
         }
         int mark = (min+max)/2;
-        if(word.compareTo(this.addedWords[mark]) == 0){
+        if(word.toLowerCase().compareTo(this.addedWords[mark].toLowerCase()) == 0){
             found  = mark;
         }
-        else if(word.compareTo(this.addedWords[mark]) < 0){
+        else if(word.toLowerCase().compareTo(this.addedWords[mark].toLowerCase()) < 0){
             max = mark;
         }
         else{
             min = mark+1;
         }
         if(!(min < max)){
-            found = (word.compareTo(this.addedWords[mark]) < 0) ? mark-1 : mark+1;
+            found = (word.toLowerCase().compareTo(this.addedWords[mark].toLowerCase()) < 0) ? mark-1 : mark+1;
         }
         while(min <= max && found == -1 ){
             mark = (min+max)/2;
@@ -374,10 +374,10 @@ public class Dictionary {
                 if(this.addedWords[mark] == null){
                     found = mark;
                 }
-                else if(word.compareTo(this.addedWords[mark]) == 0){
+                else if(word.toLowerCase().compareTo(this.addedWords[mark].toLowerCase()) == 0){
                     found  = mark;
                 }
-                else if(word.compareTo(this.addedWords[mark]) < 0){
+                else if(word.toLowerCase().compareTo(this.addedWords[mark].toLowerCase()) < 0){
                     found = mark;
                 }
                 else{
@@ -386,10 +386,10 @@ public class Dictionary {
             }
             else{
                 mark = (min+max)/2;
-                if(word.compareTo(this.addedWords[mark]) == 0){
+                if(word.toLowerCase().compareTo(this.addedWords[mark].toLowerCase()) == 0){
                     found = mark;
                 }
-                else if(word.compareTo(this.addedWords[mark]) < 0){
+                else if(word.toLowerCase().compareTo(this.addedWords[mark].toLowerCase()) < 0){
                     max = mark;
                 }
                 else{
@@ -413,17 +413,17 @@ public class Dictionary {
             return max;
         }
         int mark = (min+max)/2;
-        if(word.compareTo(this.incorrectWords[mark]) == 0){
+        if(word.toLowerCase().compareTo(this.incorrectWords[mark].toLowerCase()) == 0){
             found  = mark;
         }
-        else if(word.compareTo(this.incorrectWords[mark]) < 0){
+        else if(word.toLowerCase().compareTo(this.incorrectWords[mark].toLowerCase()) < 0){
             max = mark;
         }
         else{
             min = mark+1;
         }
         if(!(min < max)){
-            found = (word.compareTo(this.incorrectWords[mark]) < 0) ? mark-1 : mark+1;
+            found = (word.toLowerCase().compareTo(this.incorrectWords[mark].toLowerCase()) < 0) ? mark-1 : mark+1;
         }
         while(min <= max && found == -1 ){
             mark = (min+max)/2;
@@ -431,10 +431,10 @@ public class Dictionary {
                 if(this.incorrectWords[mark] == null){
                     found = mark;
                 }
-                else if(word.compareTo(this.incorrectWords[mark]) == 0){
+                else if(word.toLowerCase().compareTo(this.incorrectWords[mark].toLowerCase()) == 0){
                     found  = mark;
                 }
-                else if(word.compareTo(this.incorrectWords[mark]) < 0){
+                else if(word.toLowerCase().compareTo(this.incorrectWords[mark].toLowerCase()) < 0){
                     found = mark;
                 }
                 else{
@@ -443,10 +443,10 @@ public class Dictionary {
             }
             else{
                 mark = (min+max)/2;
-                if(word.compareTo(this.incorrectWords[mark]) == 0){
+                if(word.toLowerCase().compareTo(this.incorrectWords[mark].toLowerCase()) == 0){
                     found = mark;
                 }
-                else if(word.compareTo(this.incorrectWords[mark]) < 0){
+                else if(word.toLowerCase().compareTo(this.incorrectWords[mark].toLowerCase()) < 0){
                     max = mark;
                 }
                 else{
