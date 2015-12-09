@@ -16,7 +16,9 @@ public class Dictionary {
     private static int addFilecount;
     private static int incFilecount;
 
-
+    /**
+     * No Args-Constructor, Instantiates everything.
+     */
     public Dictionary(){
         this.dictionary = new String[50];
         this.addedWords = new String[50];
@@ -47,6 +49,10 @@ public class Dictionary {
 
     }
 
+    /**
+     * Constructor that
+     * @param size
+     */
     public Dictionary(int size){
         this.dictionary = new String[size];
         this.addedWords = new String[size];
@@ -56,6 +62,24 @@ public class Dictionary {
         this.incSize = 0;
         addFilecount = 0;
         incFilecount = 0;
+        File file = new File("Dictionary.txt");
+        if(file.exists()) {
+            FileReader read = null;
+            try {
+                read = new FileReader(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            BufferedReader readB = new BufferedReader(read);
+            String line;
+            try {
+                while ((line = readB.readLine()) != null) {
+                    this.insertWord(line);
+                }
+            } catch (IOException e) {
+                //Handle error
+            }
+        }
     }
 
 
