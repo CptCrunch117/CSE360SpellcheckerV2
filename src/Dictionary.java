@@ -464,7 +464,7 @@ public class Dictionary {
     }
 
     //FILE OPS
-    public boolean addedToFile(String optName) throws IOException {
+    public boolean addedToFile(String optName){
 
         String filename = "addedWords"+addFilecount+".txt";
         if(optName != null){

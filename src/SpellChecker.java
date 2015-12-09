@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Scanner;
 
@@ -7,74 +11,28 @@ import java.util.Scanner;
 public class SpellChecker {
     
     private JFrame frame;
-
+    Dictionary dict;
+    int iter = 0;
+    boolean isInit = true;
     public static void main(String[] args) throws IOException {
+
+
         EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SpellcheckerGUI window = new SpellcheckerGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-        Dictionary dict = new Dictionary();
-        System.out.println(dict.toString());
-        Scanner scan = new Scanner(System.in);
-        String in;
-        System.out.println(" would you like to enter a file? [y/n]");
-        in  = scan.nextLine();
-        while(in.equalsIgnoreCase("y")) {
-            dict.clearArrays();
-            String filename = scan.nextLine();
-            File file = new File(filename);
-            FileReader read = new FileReader(file);
-            BufferedReader readB = new BufferedReader(read);
-
-            String line;
-            while ((line = readB.readLine()) != null) {
-                boolean verifyLetter = true;
-                char[] wordChar = line.toCharArray();
-                for (char c : wordChar) {
-                    if (!Character.isLetter(c)) {
-                        verifyLetter = false;
-                    }
-                }
-
-                if (verifyLetter) {  //Disregard if verifyLetter is false as Line does not just contain letters
-                    int correct = dict.searchWord(dict.getDictionary(), "dict", line);
-                    if (correct == -1) {
-                        dict.insertIncWord(line);
-                    }
+            public void run() {
+                try {
+                    SpellChecker window = new SpellChecker();
+                    window.frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-            System.out.println("Incorrect Words:");
-            System.out.println(dict.incorrectWordsString());
-            System.out.println("Would you like to add any of these?");
-            String input = scan.nextLine();
-            if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
-                int size = dict.getIncSize();
-                for (int i = 0; i < dict.getIncSize(); i++) {
-                    System.out.println("Would you like to add: " + dict.getIncorrectWords()[i] + " ? enter: [y/n]");
-                    input = scan.nextLine();
-                    if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
-                        dict.insertWord(dict.getIncorrectWords()[i]);
-                        dict.insertAdWord(dict.getIncorrectWords()[i]);
-                        dict.delete(dict.getIncorrectWords(), dict.getIncorrectWords()[i], "inc");
-                        i -= 1;
-                    }
-                }
-            }
-            System.out.println(dict.dictToFile());
-            System.out.println(dict.addedToFile(null));
-            System.out.println(dict.incToFile(null));
+        });
 
-            System.out.println(" would you like to enter another file? [y/n]");
-            in  = scan.nextLine();
-        }
-        System.exit(0);
+
     }
+
+
+
 	/**
 	 * Create the application.
 	 */
@@ -86,6 +44,8 @@ public class SpellChecker {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
+
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Lucida Grande", Font.PLAIN, 33));
 		frame.setBounds(100, 100, 450, 300);
@@ -96,11 +56,21 @@ public class SpellChecker {
 		txtrWordsWillAppear.setRows(2);
 		txtrWordsWillAppear.setText("Words Will Appear Here");
 		frame.getContentPane().add(txtrWordsWillAppear, BorderLayout.NORTH);
-		
+
+
+
+
+        dict = new Dictionary();
+
+
+
+
+
+
 		JButton btnIgnore = new JButton("Ignore");
 		btnIgnore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+                iter++;
 			}
 		});
 		frame.getContentPane().add(btnIgnore, BorderLayout.WEST);
@@ -108,19 +78,65 @@ public class SpellChecker {
 		JButton btnAddWord = new JButton("Add Word");
 		btnAddWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+                dict.insertWord(dict.getIncorrectWords()[iter]);
+                dict.insertAdWord(dict.getIncorrectWords()[iter]);
+                dict.delete(dict.getIncorrectWords(), dict.getIncorrectWords()[iter], "inc");
+                iter -= 1;
 			}
 		});
 
 		frame.getContentPane().add(btnAddWord, BorderLayout.EAST);
 		
-		JButton btnNext = new JButton("Next");
+		final JButton btnNext = new JButton("New File");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+                if(!isInit){
+                    dict.dictToFile();
+                    dict.addedToFile(null);
+                    dict.incToFile(null);
+                    dict.clearArrays();
+                }
+                String path = JOptionPane.showInputDialog("Enter File path");
+                File file = new File(path);
+                if(file.exists()) {
+                    FileReader read = null;
+                    try {
+                        read = new FileReader(file);
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                    BufferedReader readB = new BufferedReader(read);
+
+                    String line;
+                    try{
+                    while ((line = readB.readLine()) != null) {
+                            boolean verifyLetter = true;
+                            char[] wordChar = line.toCharArray();
+                            for (char c : wordChar) {
+                                if (!Character.isLetter(c)) {
+                                    verifyLetter = false;
+                                }
+                            }
+
+                            if (verifyLetter) {  //Disregard if verifyLetter is false as Line does not just contain letters
+                                int correct = dict.searchWord(dict.getDictionary(), "dict", line);
+                                if (correct == -1) {
+                                    dict.insertIncWord(line);
+                                }
+                            }
+                        }
+                        iter = dict.getIncSize();
+                    }catch(IOException x){
+                        JOptionPane.showMessageDialog(null,"Could not read file");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"File Does Not Exist!");
+                }
+            }
 		});
 
 		frame.getContentPane().add(btnNext, BorderLayout.CENTER);
 	}
 
-
 }
+
