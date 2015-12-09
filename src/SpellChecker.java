@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
 import java.util.Scanner;
 
@@ -11,6 +10,8 @@ import java.util.Scanner;
 public class SpellChecker {
     
     private JFrame frame;
+    private JMenuBar jBar;
+    private JMenu menu;
     Dictionary dict;
     int iter = 0;
     int iterEnd = 0;
@@ -29,9 +30,7 @@ public class SpellChecker {
                 }
             }
         });
-
-
-    }
+    }//END MAIN METHOD
 
 
 
@@ -59,12 +58,51 @@ public class SpellChecker {
 		txtrWordsWillAppear.setText("Welcome to SpellChecker!");
         txtrWordsWillAppear.setEditable(false);
 		frame.getContentPane().add(txtrWordsWillAppear, BorderLayout.NORTH);
+        jBar = new JMenuBar();
+        menu = new JMenu("Help");
+        menu.addMouseListener(new MouseListener() {
 
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
 
+            }
 
+            @Override
+            public void mousePressed(MouseEvent e) {
+                String str = "To get Started navigate to \"CSE360Spellchecker/TextFilesHere\"\n" +
+                        "and add in text files you want to run later when using the program. Next launch the program\n" +
+                        "and click \"New File\" button, in the prompt, enter the name of the text file (with extension)\n" +
+                        "and click ok. If incorrect words are found, you have the choice to walk through each incorrect word\n" +
+                        "found and either ignore or add them to the dictionary. To see the results, navigate to the folder\n" +
+                        "\"CSE360Spellchecker/Words\" here the text files generated with addedWords and incorrectWords will\n" +
+                        "be stored! Thank you for using the Spell Checker 5000 and enjoy!";
+                JOptionPane.showMessageDialog(null, str);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // TODO Auto-generated method stub
+                System.exit(0);
+            }
+        });
+        jBar.add(menu);
+        frame.setJMenuBar(jBar);
+        frame.setTitle("SpellChecker 5000");
 
         dict = new Dictionary();
-
 
 
 
@@ -195,6 +233,16 @@ public class SpellChecker {
             }
         });
 	}
+
+
+    private class HelpListener implements ActionListener
+    {
+
+        public void actionPerformed(ActionEvent e)
+        {
+            JOptionPane.showMessageDialog(null,"sup");
+        }
+    }
 
 }
 
