@@ -78,7 +78,7 @@ public class SpellChecker {
 	/**
 	 * Create the application.
 	 */
-	public SpellcheckerGUI() {
+	public SpellChecker() {
 		initialize();
 	}
 
