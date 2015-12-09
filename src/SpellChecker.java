@@ -12,7 +12,7 @@ public class SpellChecker {
         EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SpellChecker window = new SpellChecker();
+					SpellcheckerGUI window = new SpellcheckerGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -20,38 +20,6 @@ public class SpellChecker {
 			}
 		});
         Dictionary dict = new Dictionary();
-        /*dict.insertWord("A");
-        dict.insertWord("D");
-        dict.insertWord("F");
-        dict.insertWord("H");
-        dict.insertWord("B");
-        dict.insertWord("C");
-        dict.insertWord("E");
-        dict.insertWord("G");
-        dict.insertWord("L");
-        dict.insertWord("M");
-        dict.insertWord("O");
-        dict.insertWord("N");
-        dict.insertWord("Q");
-        dict.insertWord("R");
-        dict.insertWord("I");
-        dict.insertWord("J");
-        dict.insertWord("K");
-        dict.insertWord("P");
-        dict.insertWord("T");
-        dict.insertWord("S");
-        dict.insertWord("W");
-        dict.insertWord("U");
-        dict.insertWord("V");
-        dict.insertWord("X");
-        dict.insertWord("Y");
-        dict.insertWord("Z");*/
-        /*dict.insertWord("hey");
-        dict.insertWord("ice");
-        dict.insertWord("like");
-        dict.insertWord("man");
-        dict.insertWord("what");
-        dict.insertWord("up");*/
         System.out.println(dict.toString());
         Scanner scan = new Scanner(System.in);
         String in;
