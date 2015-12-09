@@ -89,7 +89,6 @@ public class SpellChecker {
                     dict.insertWord(dict.getIncorrectWords()[iter]);
                     dict.insertAdWord(dict.getIncorrectWords()[iter]);
                     dict.delete(dict.getIncorrectWords(), dict.getIncorrectWords()[iter], "inc");
-                    iter -= 1;
                     txtrWordsWillAppear.setText(dict.getIncorrectWords()[iter]);
                 } else {
                     txtrWordsWillAppear.setText("All incorrect words have been sorted out.");
@@ -103,12 +102,15 @@ public class SpellChecker {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                 if(!isInit){
+                    iterEnd = 0;
                     dict.dictToFile();
                     dict.addedToFile(null);
                     dict.incToFile(null);
                     dict.clearArrays();
                     txtrWordsWillAppear.setText("Processing File...");
-
+                }
+                else{
+                    isInit = false;
                 }
                 String path = JOptionPane.showInputDialog("Enter File path");
                 File file = new File(path);

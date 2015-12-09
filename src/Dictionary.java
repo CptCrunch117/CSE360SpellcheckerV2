@@ -20,8 +20,8 @@ public class Dictionary {
      * No Args-Constructor, Instantiates everything.
      */
     public Dictionary(){
-        this.dictionary = new String[50];
-        this.addedWords = new String[50];
+        this.dictionary = new String[5];
+        this.addedWords = new String[5];
         this.incorrectWords = new String[50];
         this.size = 0;
         this.adSize = 0;
@@ -111,9 +111,19 @@ public class Dictionary {
         return -1;
     }
     private void expandSize(String[] listForExpansion, String type){
-        int newLength = listForExpansion.length * 2;
+        int newLength = listForExpansion.length*2;
         String[] d = new String[newLength];
-        for(int i = 0; i <= listForExpansion.length; i++)
+        int size = 0;
+        if(type.equalsIgnoreCase("dict")){
+            size = this.size;
+        }
+        else if(type.equalsIgnoreCase("add")){
+            size = this.adSize;
+        }
+        else if(type.equalsIgnoreCase("inc")){
+            size = this.incSize;
+        }
+        for(int i = 0; i < size; i++)
         {
             d[i] = listForExpansion[i];
             if(type.equalsIgnoreCase("dict")){
