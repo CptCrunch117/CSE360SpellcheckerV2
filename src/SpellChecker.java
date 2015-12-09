@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * Created by CptAmerica on 12/8/15.
+ * Created by Team 5
  */
 public class SpellChecker {
     
@@ -119,7 +119,7 @@ public class SpellChecker {
                 }
                 String path = JOptionPane.showInputDialog("Enter File path");
                 if (path != null) {
-                    File file = new File(path);
+                    File file = new File("TextFIlesHere/"+path);
                     if (file.exists()) {
                         FileReader read = null;
                         try {
@@ -182,13 +182,15 @@ public class SpellChecker {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (JOptionPane.showConfirmDialog(frame, "Are you sure to close this window?", "Really Closing?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                int x = JOptionPane.showConfirmDialog(frame, "Would you like to save the files before closing this application?", "Really Closing!?!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(x == 0){
                     dict.dictToFile();
                     dict.addedToFile(null);
                     dict.incToFile(null);
                     System.exit(0);
+                }
+                else if(x == 1){
+                    //Don't close...?
                 }
             }
         });

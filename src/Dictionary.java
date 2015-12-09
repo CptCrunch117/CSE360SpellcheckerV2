@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.Random;
 
 /**
- * Created by CptAmerica on 12/8/15.
+ * Created by Team 5
  */
 public class Dictionary {
 
@@ -28,7 +28,7 @@ public class Dictionary {
         this.incSize = 0;
         addFilecount = 0;
         incFilecount = 0;
-        File file = new File("Dictionary.txt");
+        File file = new File("Words/Dictionary.txt");
         if(file.exists()) {
             FileReader read = null;
             try {
@@ -62,7 +62,7 @@ public class Dictionary {
         this.incSize = 0;
         addFilecount = 0;
         incFilecount = 0;
-        File file = new File("Dictionary.txt");
+        File file = new File("Words/Dictionary.txt");
         if(file.exists()) {
             FileReader read = null;
             try {
@@ -82,14 +82,28 @@ public class Dictionary {
         }
     }
 
+    /**
+     * Increments file number being processed for saving the addedWords file. This helps for naming different files in a given session.
+     */
     public void incrementAddFile(){
         this.addFilecount+=1;
     }
 
+    /**
+     * Increments file number being processed for saving the ignoredWords file. This helps for naming different files in a given session.
+     */
     public void incrementIncFile(){
         this.incFilecount+=1;
     }
 
+    /**
+     * This algorithm uses binary search on the String array to find the index that matches with the key (the word).
+     * @param list The list to search
+     * @param type The type of list, addedWords list = "add", ignoredWords list = "inc", and the Dictionary list = "dict"
+     *             This helps determine also which size integer to use for the loop iteration in the search.
+     * @param word The word is the string key to search in the list provided.
+     * @return  returns an iteger representation of the found word's index in the list, and a value of -1 if not found in the list.
+     */
     public int searchWord(String[] list,String type,String word){
         int size = 0;
         if(type.equalsIgnoreCase("dict")){
@@ -117,6 +131,13 @@ public class Dictionary {
         }
         return -1;
     }
+
+    /**
+     * This private method expands the size of the array passed in by double the array's orignial length when passed in.
+     * @param listForExpansion The String array to expand.
+     * @param type The type of list, addedWords list = "add", ignoredWords list = "inc", and the Dictionary list = "dict"
+     *             This helps determine also which size integer to use for the loop iteration in the search.
+     */
     private void expandSize(String[] listForExpansion, String type){
         int newLength = listForExpansion.length*2;
         String[] d = new String[newLength];
@@ -144,6 +165,12 @@ public class Dictionary {
             }
         }
     }
+
+    /**
+     * This method inserts a word into the dictionary string array in ascending alphabetical order.
+     * @param word The word to insert into the Dictionary list.
+     * @return Returns true if the word was successfully inserted into the Dictionary and false otherwise.
+     */
     public boolean insertWord(String word){
         int exists = searchWord(this.getDictionary(), "dict", word);
         if(exists == -1){
@@ -178,6 +205,12 @@ public class Dictionary {
         }
         return false;
     }
+
+    /**
+     * This method inserts a word into the ignored Words string array in ascending alphabetical order.
+     * @param word The word to insert into the ignored Words list.
+     * @return Returns true if the word was successfully inserted into the ignored Words list and false otherwise.
+     */
     public boolean insertIncWord(String word){
         int exists = searchWord(this.getIncorrectWords(), "inc", word);
         if(exists == -1) {
@@ -212,6 +245,12 @@ public class Dictionary {
         }
         return false;
     }
+
+    /**
+     * This method inserts a word into the added Words string array in ascending alphabetical order.
+     * @param word The word to insert into the added Words list.
+     * @return Returns true if the word was successfully inserted into the ignored Words list and false otherwise.
+     */
     public boolean insertAdWord(String word){
         int exists = searchWord(this.getDictionary(),"add",word);
         if(exists == -1) {
@@ -246,6 +285,12 @@ public class Dictionary {
         }
         return false;
     }
+
+    /**
+     * Finds the insertion point for the word being inserted using a modified Binary search, this allows insert to truly be O(logn) complexity.
+     * @param word The word to insert into the Dictionary list.
+     * @return Returns the integer representation of the index position the word should belong in the Dictionary String array
+     */
     private int findInsertionPoint(String word){
         int min = 0;
         int max = this.size;
@@ -297,6 +342,12 @@ public class Dictionary {
         }//END WHILE LOOP
         return found;
     }
+
+    /**
+     * Finds the insertion point for the word being inserted using a modified Binary search, this allows insert to truly be O(logn) complexity.
+     * @param word The word to insert into the added Words list.
+     * @return Returns the integer representation of the index position the word should belong in the added Words String array
+     */
     private int findAdInsertionPoint(String word){
         int min = 0;
         int max = this.adSize;
@@ -348,6 +399,12 @@ public class Dictionary {
         }//END WHILE LOOP
         return found;
     }
+
+    /**
+     * Finds the insertion point for the word being inserted using a modified Binary search, this allows insert to truly be O(logn) complexity.
+     * @param word The word to insert into the ignored  Words list.
+     * @return Returns the integer representation of the index position the word should belong in the ignored Words String array
+     */
     private int findIncInsertionPoint(String word){
         int min = 0;
         int max = this.incSize;
@@ -399,6 +456,14 @@ public class Dictionary {
         }//END WHILE LOOP
         return found;
     }
+
+    /**
+     * This algorithm Deletes a word from a list and mantains this alpahbetical order afterwards in a given list.
+     * @param list The list to delete the word from.
+     * @param word The word to delete from the given list.
+     * @param type The type of list, addedWords list = "add", ignoredWords list = "inc", and the Dictionary list = "dict"
+     *             This helps determine also which size integer to use for the loop iteration in the search.
+     */
     public void delete(String[] list, String word, String type ){
         int exists = searchWord(list,type,word);
         int size = 0;
@@ -429,6 +494,11 @@ public class Dictionary {
             }
         }
     }
+
+    /**
+     * This algorithm clears and resets the addedWords, and ignoredWords string arrays (NOT the Dictionary array),
+     * and resets values associated with these two lists.
+     */
     public void clearArrays(){
         int adLength = this.addedWords.length;
         int incLength = this.incorrectWords.length;
@@ -439,6 +509,11 @@ public class Dictionary {
     }
 
     //GETTERS AND TOSTRINGS
+
+    /**
+     * Makes a string representation of the incorrectWords list.
+     * @return The string representation of the incorrectWords list.
+     */
     public String incorrectWordsString(){
         String incorrectWords = "";
         for(int i = 0; i < this.incSize; i++){
@@ -446,6 +521,11 @@ public class Dictionary {
         }
         return incorrectWords;
     }
+
+    /**
+     * Makes a string representation of the addedWords list.
+     * @return The string representation of the addedWords list.
+     */
     public String addedWordsString(){
         String incorrectWords = "";
         for(int i = 0; i < this.adSize; i++){
@@ -453,24 +533,55 @@ public class Dictionary {
         }
         return incorrectWords;
     }
+
+    /**
+     * Returns the Dictionary array for public access
+     * @return The Dictionary String array
+     */
     public String[] getDictionary() {
         return dictionary;
     }
+
+    /**
+     * Returns the addedWords array for public access
+     * @return The addedWords String array
+     */
     public String[] getAddedWords() {
         return addedWords;
     }
+
+    /**
+     * Returns the incorrectWords array for public access
+     * @return The incorrectWords String array.
+     */
     public String[] getIncorrectWords() {
         return incorrectWords;
     }
+
+    /**
+     * Returns the number of words currently in the incorrectWords String array
+     * @return integer representation of words currently in the incorrectWords String array
+     */
     public int getIncSize() {
         return incSize;
     }
+
+    /**
+     * Returns the number of words currently in the addedWords String array
+     * @return integer representation of words currently in the addedWords String array
+     */
     public int getAdSize() {
         return adSize;
     }
+
+    /**
+     * Returns the number of words currently in the Dictionary String array
+     * @return integer representation of words currently in the Dictionary String array
+     */
     public int getSize() {
         return size;
     }
+
     @Override
     public String toString(){
         String diction = "";
@@ -481,13 +592,19 @@ public class Dictionary {
     }
 
     //FILE OPS
+
+    /**
+     * Generates a text file with all the words that were added to the Dictionary in alphabetical order.
+     * @param optName The optional name the user can give [didn't implement in app but is implementable]
+     * @return True if the file was successfully written and saved and False otherwise
+     */
     public boolean addedToFile(String optName){
         if(adSize > 0) {
             String filename = "addedWords" + addFilecount + ".txt";
             if (optName != null) {
                 filename = optName + ".txt";
             }
-            File addedWords = new File(filename);
+            File addedWords = new File("Words/"+filename);
             if (!addedWords.exists()) {
                 FileWriter write;
                 try {
@@ -514,13 +631,19 @@ public class Dictionary {
         }
         return true;
     }
+
+    /**
+     * Generates a text file with all the words that were ignored in alphabetical order.
+     * @param optName The optional name the user can give [didn't implement in app but is implementable]
+     * @return True if the file was successfully written and saved and False otherwise
+     */
     public boolean incToFile(String optName){
         if(incSize > 0) {
             String filename = "incorrectWords" + incFilecount + ".txt";
             if (optName != null) {
                 filename = optName + ".txt";
             }
-            File incWords = new File(filename);
+            File incWords = new File("Words/"+filename);
             if (!incWords.exists()) {
                 FileWriter write;
                 try {
@@ -547,8 +670,14 @@ public class Dictionary {
         }
         return true;
     }
-    public boolean dictToFile(){
-        File diction = new File("Dictionary.txt");
+
+    /**
+     * Generates an updated text file with all the words that are now in the Dictionary in alphabetical order.
+     * @return True if the file was successfully written and saved and False otherwise
+     */
+    public boolean dictToFile()
+    {
+        File diction = new File("Words/Dictionary.txt");
         FileWriter write;
         try{
             write = new FileWriter(diction);
