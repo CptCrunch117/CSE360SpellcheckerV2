@@ -116,9 +116,7 @@ public class SpellChecker {
 		JButton btnAddWord = new JButton("Add Word");
 		btnAddWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                /*dict.insertWord(dict.getIncorrectWords()[i]);
-                dict.insertAdWord(dict.getIncorrectWords()[i]);
-                dict.delete(dict.getIncorrectWords(), dict.getIncorrectWords()[i], "inc");*/
+
 			}
 		});
 
